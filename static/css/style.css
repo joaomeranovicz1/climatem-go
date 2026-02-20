@@ -1,0 +1,185 @@
+:root {
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --text-primary: #2d3748;
+    --text-secondary: #718096;
+    --accent: #5a67d8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-gradient);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-primary);
+}
+
+.container {
+    width: 100%;
+    max-width: 400px; /* simula mobile */
+    padding: 20px;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.logo { font-size: 1.2rem; letter-spacing: 1px; }
+
+.status {
+    font-size: 0.8rem;
+    background: rgba(0,0,0,0.2);
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+/* barra de pesquisa */
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-family: inherit;
+    outline: none;
+    backdrop-filter: blur(5px);
+}
+
+.search-box input::placeholder {
+    color: rgba(255, 255, 255, 0.521);
+}
+
+.search-box button {
+    background: white;
+    border: none;
+    border-radius: 12px;
+    width: 45px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transform 0.2s;
+}
+
+.search-box button:active {
+    transform: scale(0.9);
+}
+
+.city-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Card Principal */
+.weather-card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.weather-icon { font-size: 4rem; margin-bottom: 0.5rem; }
+
+h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.description {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    text-transform: capitalize;
+}
+
+/* Grid de Detalhes */
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.label { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px; }
+.value { font-size: 1.1rem; font-weight: 600; color: var(--accent); }
+
+/* Botão */
+.btn-refresh {
+    background: white;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 12px;
+    color: var(--accent);
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: 0.2s;
+}
+
+.btn-refresh:active { transform: scale(0.98); }
+
+/*  CONSULTOR DE ESPORTE outdoor */
+
+/* Caixa de Dicas */
+.tip-box {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: left;
+    line-height: 1.4;
+    border-left: 5px solid transparent; 
+    transition: all 0.3s ease;
+    background: #f7fafc; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* estilos dinâmicos */
+.dica-bom {
+    background-color: #f0fff4; 
+    border-left-color: #48bb78;
+    color: #2f855a;
+}
+
+.dica-atencao {
+    background-color: #fffaf0; 
+    border-left-color: #ed8936;
+    color: #c05621;
+}
+
+.dica-perigo {
+    background-color: #fff5f5; 
+    border-left-color: #f56565;
+    color: #c53030;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClimaTem</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">CLIMA<strong>TEM</strong></div>
+            <div id="status-conexao" class="status">● Pronto</div>
+        </header>
+
+        <div class="search-box">
+            <input type="text" id="input-cidade" placeholder="Digite sua cidade...">
+            <button onclick="buscarCidadeBotao()">🔍</button>
+        </div>
+
+        <main class="weather-card">
+            <div class="city-name" id="nome-cidade-titulo">Localização Atual</div>
+
+            <div class="weather-icon" id="icone-clima">--</div>
+            <h1 id="temperatura">--°</h1>
+            <p class="description" id="descricao">--</p>
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <span class="label">Sensação</span>
+                    <span class="value" id="sensacao">--°</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Umidade</span>
+                    <span class="value" id="umidade">--%</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Índice UV</span>
+                    <span class="value" id="uv">--</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Pólen</span>
+                    <span class="value" id="polen">--</span>
+                </div>
+            </div>
+
+            <div id="box-dica" class="tip-box">
+                Analisando condições...
+            </div>
+        </main>
+
+        <footer>
+            <button onclick="iniciarApp()" class="btn-refresh">📍 Usar meu GPS</button>
+        </footer>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
