@@ -151,18 +151,22 @@ func fetchJSON(urlLink string, target interface{}) {
 		return
 	}
 
-	req.Header.Set("User-Agent", "ClimaTem-App/1.0 (Student Project)")
+	req.Header.Set("User-Agent", "ClimaTem-Estudante-BR/1.0")
 
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println("❌ Erro de Rede:", err)
+		fmt.Println("Erro de Rede:", err)
 		return
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != 200 {
+	if resp.StatusCode == 429 {
+		fmt.Println("API pediu calma (429). IP congestionado.")
+		return
+	}
 
-		fmt.Println(" API Rejeitou:", resp.Status)
+	if resp.StatusCode != 200 {
+		fmt.Println("API Rejeitou:", resp.Status)
 		return
 	}
 
