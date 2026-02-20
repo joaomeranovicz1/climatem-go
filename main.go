@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 )
 
@@ -81,6 +82,12 @@ func main() {
 
 	fmt.Println("🚀 Servidor Go rodando em: http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		fmt.Println("Servidor Go rodando em http://localhost:8080")
+		log.Fatal(http.ListenAndServe(":"+port, nil))
+	}
 }
 
 // lat e lon pelo nome da cidade
