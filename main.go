@@ -11,7 +11,6 @@ import (
 	"time"
 )
 
-// geocodificação (busca de cidades)
 type GeoResponse struct {
 	Results []struct {
 		Name      string  `json:"name"`
@@ -22,7 +21,6 @@ type GeoResponse struct {
 	} `json:"results"`
 }
 
-// clima
 type WeatherResponse struct {
 	Current struct {
 		Temperature2m       float64 `json:"temperature_2m"`
@@ -38,7 +36,6 @@ type WeatherResponse struct {
 	} `json:"daily"`
 }
 
-// resposta do polen
 type AirQualityResponse struct {
 	Current struct {
 		BirchPollen   float64 `json:"birch_pollen"`
@@ -48,7 +45,6 @@ type AirQualityResponse struct {
 	} `json:"current"`
 }
 
-// dados finais para o Frontend
 type DadosFrontend struct {
 	Temperatura float64 `json:"temp"`
 	Sensacao    float64 `json:"sensacao"`
@@ -74,48 +70,40 @@ func main() {
 		tmpl.Execute(w, nil)
 	})
 
-	// lat/lon)
 	http.HandleFunc("/api/clima", buscaDadosHandler)
-
-	//  buscar cidade
 	http.HandleFunc("/api/cidade", buscarCidadeHandler)
 
-	fmt.Println("🚀 Servidor Go rodando em: http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
-		fmt.Println("Servidor Go rodando em http://localhost:8080")
-		log.Fatal(http.ListenAndServe(":"+port, nil))
+		fmt.Println("🚀 Servidor Go rodando localmente em: http://localhost:8080")
 	}
+
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
-// lat e lon pelo nome da cidade
 func buscarCidadeHandler(w http.ResponseWriter, r *http.Request) {
 	nome := r.URL.Query().Get("nome")
 	if nome == "" {
-		http.Error(w, "Nome da cidade vazio", 400)
+		http.Error(w, "Nome vazio", 400)
 		return
 	}
-	// add cod para busca de nome composto
+
 	nomeSeguro := url.QueryEscape(nome)
-	// url da API
-	url := fmt.Sprintf("https://geocoding-api.open-meteo.com/v1/search?name=%s&count=5&language=pt&format=json", nomeSeguro)
+	link := fmt.Sprintf("https://geocoding-api.open-meteo.com/v1/search?name=%s&count=5&language=pt&format=json", nomeSeguro)
 
 	var geo GeoResponse
-	fetchJSON(url, &geo)
+	fetchJSON(link, &geo)
 
 	w.Header().Set("Content-Type", "application/json")
 
 	if len(geo.Results) > 0 {
 		json.NewEncoder(w).Encode(geo.Results[0])
 	} else {
-		// erro se não achar
 		http.Error(w, "Cidade não encontrada", 404)
 	}
 }
 
-// usca clima e processa dados
 func buscaDadosHandler(w http.ResponseWriter, r *http.Request) {
 	lat := r.URL.Query().Get("lat")
 	lon := r.URL.Query().Get("lon")
@@ -154,14 +142,29 @@ func buscaDadosHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(resultado)
 }
 
-func fetchJSON(url string, target interface{}) {
-	client := http.Client{Timeout: 5 * time.Second}
-	resp, err := client.Get(url)
+func fetchJSON(urlLink string, target interface{}) {
+	client := http.Client{Timeout: 10 * time.Second}
+
+	req, err := http.NewRequest("GET", urlLink, nil)
 	if err != nil {
-		fmt.Println("Erro URL:", url, err)
+		fmt.Println("Erro req:", err)
+		return
+	}
+
+	req.Header.Set("User-Agent", "ClimaTem-App/1.0 (Student Project)")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("❌ Erro de Rede:", err)
 		return
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		fmt.Println("⚠️ API Rejeitou:", resp.Status)
+		return
+	}
+
 	json.NewDecoder(resp.Body).Decode(target)
 }
 
