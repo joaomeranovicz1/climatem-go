@@ -161,7 +161,8 @@ func fetchJSON(urlLink string, target interface{}) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		fmt.Println("⚠️ API Rejeitou:", resp.Status)
+
+		fmt.Println(" API Rejeitou:", resp.Status)
 		return
 	}
 
