@@ -1,0 +1,19 @@
+# binários e executáveis
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+main
+test
+out/
+
+# arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+
+# editor 
+.vscode/
